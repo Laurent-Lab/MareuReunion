@@ -29,7 +29,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_fiber_manual_record_black_24dp" />
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_fiber_manual_record_green_24dp" />
 
         </LinearLayout>
 

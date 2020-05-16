@@ -8,20 +8,22 @@ public interface InterfaceReunionApiServices {
 
     /**
      * Je récupère la liste de réunions
-     * @return
+     * @return reunions
      */
     List<Reunion> getReunions();
 
     /**
-     * Je supprime une réunion
+     * Retourne une réunion
+     * @param reunion
+     */
+    void createReunion(Reunion reunion);
+
+    /**
+     * Supprime une réunion
      * @param reunion
      */
     void deleteReunion(Reunion reunion);
 
-    /**
-     * Je crée une réunion
-     * @param reunion
-     */
-    void createReunion(Reunion reunion);
+
 
 }

@@ -5,27 +5,29 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.model.Reunion;
 
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
-
-    private ImageView imgCircle;
+    public ImageView color;
     public ImageButton deleteButton;
     private TextView sujet;
     private TextView heure;
     private TextView lieu;
     private TextView participants;
+    Reunion reunion;
 
+    /**
+     *
+     * @param itemView
+     */
     public MyViewHolder(View itemView) {
         super(itemView);
 
-        imgCircle = itemView.findViewById(R.id.fragment_item_img_circle);
+        color = itemView.findViewById(R.id.fragment_item_img_circle);
         deleteButton = itemView.findViewById(R.id.but_fragment_delete);
         sujet = itemView.findViewById(R.id.txt_fragment_sujet);
         heure = itemView.findViewById(R.id.txt_fragment_horaire);
@@ -34,11 +36,17 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    /**
+     * Vue d'une réunion
+     * @param reunions
+     */
     void display(Reunion reunions){
-
+        color.setImageResource(reunions.getColor());
         sujet.setText(reunions.getSujet());
         heure.setText(reunions.getHeure());
         lieu.setText(reunions.getLieu());
         participants.setText(reunions.getParticipants());
+
     }
+
 }
