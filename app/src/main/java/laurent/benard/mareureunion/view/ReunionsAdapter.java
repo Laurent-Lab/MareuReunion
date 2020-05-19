@@ -20,6 +20,7 @@ import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
 import laurent.benard.mareureunion.controler.DeleteReunionEvent;
 import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
+import laurent.benard.mareureunion.controler.QueryEvent;
 import laurent.benard.mareureunion.model.Reunion;
 
 public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implements Filterable {
@@ -35,6 +36,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
     ReunionsAdapter(List<Reunion> reunions){
         this.reunions = reunions;
         this.reunionsAll = new ArrayList<>(reunions);
+        services = DI.getReunionsApiServices();
     }
 
     /**
@@ -89,14 +91,14 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
         //Background
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-
+            reunionsAll = services.getReunions();
             List<Reunion> filteredList = new ArrayList<>();
 
             if (charSequence.toString().isEmpty()){
                 filteredList.addAll(reunionsAll);
             } else {
                 for (Reunion reunion : reunionsAll){
-                    if (reunion.getSujet().contains(charSequence.toString().toLowerCase())){
+                    if (reunion.getLieu().contains(charSequence.toString().toLowerCase())){
                         filteredList.add(reunion);
                     }
                 }
@@ -115,4 +117,6 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
             notifyDataSetChanged();
         }
     };
+
+
 }

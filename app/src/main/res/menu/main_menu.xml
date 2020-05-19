@@ -11,6 +11,17 @@
         android:icon="@drawable/ic_search"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        app:showAsAction="collapseActionView|ifRoom"/>
+
+    <item
+        android:id="@+id/date_filter"
+        android:title="Date"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/salle_filter"
+        android:title="Salle"
+        app:showAsAction="never"/>
+
 
 </menu>

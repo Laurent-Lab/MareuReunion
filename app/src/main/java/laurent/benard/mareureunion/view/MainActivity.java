@@ -2,6 +2,7 @@ package laurent.benard.mareureunion.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,12 +22,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
 import laurent.benard.mareureunion.controler.DeleteReunionEvent;
 import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
+import laurent.benard.mareureunion.controler.QueryEvent;
 import laurent.benard.mareureunion.model.Reunion;
 
 public class MainActivity extends AppCompatActivity  {
@@ -34,7 +39,8 @@ public class MainActivity extends AppCompatActivity  {
     private RecyclerView mRecyclerView;
     private ReunionsAdapter mReunionsAdapter;
     private InterfaceReunionApiServices services;
-    private List<Reunion> mReunions;
+    private List<Reunion> mReunions = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.reunions_list);
         services = DI.getReunionsApiServices();
         mRecyclerView = findViewById(R.id.fragment_list_items);
-        mReunionsAdapter = new ReunionsAdapter(services.getReunions());
+        mReunionsAdapter = new ReunionsAdapter(mReunions);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mReunionsAdapter);
 
@@ -58,12 +64,15 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_filter);
-        SearchView searchView = (SearchView) item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        final MenuItem item = menu.findItem(R.id.action_filter);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener( new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
@@ -77,14 +86,16 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         return super.onCreateOptionsMenu(menu);
+
     }
 
     /**
      * Initie la liste de réunions
      */
     private void init(){
-        mReunions = services.getReunions();
-        mRecyclerView.setAdapter(new ReunionsAdapter(mReunions));
+        mReunions.clear();
+        mReunions.addAll(services.getReunions());
+        mReunionsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -96,7 +107,6 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public void onStart() {
         super.onStart();
-        init();
         EventBus.getDefault().register(this);
     }
 
