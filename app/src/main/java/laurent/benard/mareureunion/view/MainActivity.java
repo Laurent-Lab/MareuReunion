@@ -111,8 +111,34 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         searchViewDate.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dilog = new DatePickerDialog(
+                        MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String monthText;
+                        String dayText;
+                        month = month + 1;
+                        if (month<10){
+                            monthText = "0" + month;
+                        }else{
+                            monthText = String.valueOf(month);
+                        }
+                        if (dayOfMonth<10){
+                            dayText = "0" + dayOfMonth;
+                        }else{
+                            dayText = String.valueOf(dayOfMonth);
+                        }
+                        String date = dayText + "/" + monthText + "/" + year;
+                        searchViewDate.setQuery(date, true);
+                    }
+                }, year, month, day
+                );
+                dilog.show();
                 if (menu!=null) {
-                    showDatePickerDialog();
 
                     searchViewDate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                         @Override
@@ -122,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
                         @Override
                         public boolean onQueryTextChange(String newText) {
-
                             mReunionsAdapter.getFilter().filter(newText);
                             return false;
                         }
@@ -137,10 +162,13 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
         String date = dayOfMonth + "/" + month + "/" + year;
+
     }
 
     private void showDatePickerDialog(){
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();

@@ -138,7 +138,7 @@ public class addActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "dd/MM/yy";
+                String myFormat = "dd/MM/yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
                 dateEditText.setText(sdf.format(calendar.getTime()));
             }
