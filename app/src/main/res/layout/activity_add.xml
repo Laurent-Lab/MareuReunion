@@ -40,20 +40,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_input_lieu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="Salle de la réunion"
-                android:focusable="false"
-                app:errorEnabled="true" />
-
             <Spinner
                 android:id="@+id/spinner"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_input_lieu"
+                android:layout_below="@id/txt_input_layout_lieu"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

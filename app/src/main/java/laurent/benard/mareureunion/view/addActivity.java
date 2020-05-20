@@ -60,7 +60,6 @@ public class addActivity extends AppCompatActivity {
         services = DI.getReunionsApiServices();
         sujetInput = findViewById(R.id.txt_input_layout_sujet);
         salleInput = findViewById(R.id.txt_input_layout_lieu);
-        salleEditText = findViewById(R.id.txt_input_lieu);
         dateInput = findViewById(R.id.txt_input_layout_date);
         dateEditText = findViewById(R.id.txt_input_date);
         heureInput = findViewById(R.id.txt_input_layout_heure);
@@ -84,19 +83,17 @@ public class addActivity extends AppCompatActivity {
     }
 
     private void addSalleCustom(){
-        ArrayList<String> sallesCustom = new ArrayList<>();
-        sallesCustom.add("Mario");
-        sallesCustom.add("Luigi");
-        sallesCustom.add("VaultBoy");
+        final ArrayList<String> sallesCustom = new ArrayList<>();
+        sallesCustom.add("mario");
+        sallesCustom.add("luigi");
+        sallesCustom.add("vaultboy");
         spinnerCustom.setAdapter(new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, sallesCustom));
 
         spinnerCustom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                salleEditText.setText("");
-                salleEditText.setText(salleEditText.getText() + parent.getItemAtPosition(position)
-                        .toString());
+                spinnerCustom.getSelectedItem().toString();
             }
 
             @Override
@@ -171,11 +168,11 @@ public class addActivity extends AppCompatActivity {
      */
     void addColor(){
 
-        String mColor = salleInput.getEditText().getText().toString();
-        if (mColor.contains("Mario")){
+        String mColor = spinnerCustom.getSelectedItem().toString();
+        if (mColor.contains("mario")){
             colorSalle = (R.drawable.ic_fiber_manual_record_red_24dp);
         }
-        else if(mColor.contains("Luigi")){
+        else if(mColor.contains("luigi")){
             colorSalle = (R.drawable.ic_fiber_manual_record_green_24dp);
         }else {
             colorSalle = (R.drawable.ic_fiber_manual_record_yellow_24dp);
@@ -187,7 +184,7 @@ public class addActivity extends AppCompatActivity {
      */
     public void addReunion() {
 
-        String lieu = salleInput.getEditText().getText().toString();
+        String lieu = spinnerCustom.getSelectedItem().toString();
         addColor();
         String heure = heureInput.getEditText().getText().toString();
         String sujet = sujetInput.getEditText().getText().toString();
@@ -208,7 +205,7 @@ public class addActivity extends AppCompatActivity {
         String sujet = sujetInput.getEditText().getText().toString().trim();
         String heure = heureInput.getEditText().getText().toString();
         String date = dateInput.getEditText().getText().toString();
-        String lieu = salleInput.getEditText().getText().toString().trim();
+        String lieu = spinnerCustom.getSelectedItem().toString().trim();
         String participants = participantsInput.getEditText().getText().toString().trim();
 
         if(sujet.isEmpty() || heure.isEmpty() || date.isEmpty() || lieu.isEmpty() || participants.isEmpty()){

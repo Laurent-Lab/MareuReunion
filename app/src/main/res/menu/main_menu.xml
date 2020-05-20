@@ -2,26 +2,28 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <item
-        android:id="@+id/action_filter"
+        android:id="@+id/menu_filtre"
+        android:title="Filtrer"
         android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|ifRoom">
 
-    <item
-        android:id="@+id/date_filter"
-        android:title="Date"
-        app:showAsAction="never" />
+        <menu>
+            <item
+                android:id="@+id/salle_filter"
+                android:title="Filtrer par salle"
+                app:showAsAction="collapseActionView|ifRoom"
+                app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item
-        android:id="@+id/salle_filter"
-        android:title="Salle"
-        app:showAsAction="never"/>
+            <item
+                android:id="@+id/date_filter"
+                android:title="Filtrer par date"
+                app:showAsAction="collapseActionView|ifRoom"
+                app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        </menu>
 
+    </item>
 
 </menu>

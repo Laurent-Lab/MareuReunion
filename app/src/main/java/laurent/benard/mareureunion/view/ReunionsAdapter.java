@@ -1,8 +1,10 @@
 package laurent.benard.mareureunion.view;
 
+import android.app.DatePickerDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -12,9 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.greenrobot.eventbus.EventBus;
 
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
@@ -28,6 +32,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
     List<Reunion> reunions;
     List<Reunion> reunionsAll;
     private InterfaceReunionApiServices services;
+
 
     /**
      *
@@ -81,6 +86,8 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
         return reunions.size();
     }
 
+
+
     @Override
     public Filter getFilter() {
         return filter;
@@ -98,7 +105,10 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
                 filteredList.addAll(reunionsAll);
             } else {
                 for (Reunion reunion : reunionsAll){
-                    if (reunion.getLieu().contains(charSequence.toString().toLowerCase())){
+                    if (reunion.getLieu().contains(charSequence.toString())){
+                        filteredList.add(reunion);
+                    }
+                    else if (reunion.getDate().contains(charSequence.toString())){
                         filteredList.add(reunion);
                     }
                 }
@@ -109,6 +119,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
 
             return filterResults;
         }
+
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
