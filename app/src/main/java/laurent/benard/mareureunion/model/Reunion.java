@@ -1,7 +1,5 @@
 package laurent.benard.mareureunion.model;
 
-import android.widget.ImageView;
-
 public class Reunion {
 
     private int color;

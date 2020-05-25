@@ -9,35 +9,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Spinner;
-import android.widget.TextView;
-
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
 import laurent.benard.mareureunion.controler.DeleteReunionEvent;
 import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
-import laurent.benard.mareureunion.controler.QueryEvent;
 import laurent.benard.mareureunion.model.Reunion;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -48,11 +39,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private ReunionsAdapter mReunionsAdapter;
     private InterfaceReunionApiServices services;
     private List<Reunion> mReunions = new ArrayList<>();
-    Calendar calendar = Calendar.getInstance();
-    SearchView mSearchView;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,22 +81,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                             searchView.setIconified(true);
                             return false;
                         }
-
                         @Override
                         public boolean onQueryTextChange(String newText) {
                             mReunionsAdapter.getFilter().filter(newText);
-
                             return false;
                         }
-
                     });
                 }
-
             }
         });
-        searchViewDate.setOnSearchClickListener(new View.OnClickListener() {
+
+        itemDate.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onMenuItemClick(MenuItem item) {
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
@@ -138,41 +121,34 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 }, year, month, day
                 );
                 dilog.show();
-                if (menu!=null) {
+                searchViewDate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
 
-                    searchViewDate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                        @Override
-                        public boolean onQueryTextSubmit(String query) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onQueryTextChange(String newText) {
-                            mReunionsAdapter.getFilter().filter(newText);
-                            return false;
-                        }
-                    });
-                }
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        mReunionsAdapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
+                return false;
             }
         });
-
 
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *
+     * @param view
+     * @param year
+     * @param month
+     * @param dayOfMonth
+     */
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-        String date = dayOfMonth + "/" + month + "/" + year;
-
-    }
-
-    private void showDatePickerDialog(){
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, this,
-                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) { }
 
     /**
      * Initie la liste de réunions
@@ -198,9 +174,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onStop() {
         super.onStop();
+        onStateNotSaved();
         EventBus.getDefault().unregister(this);
-
     }
+
 
     /**
      *

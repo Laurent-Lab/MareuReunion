@@ -42,6 +42,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
         this.reunions = reunions;
         this.reunionsAll = new ArrayList<>(reunions);
         services = DI.getReunionsApiServices();
+
     }
 
     /**
@@ -128,6 +129,8 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
             notifyDataSetChanged();
         }
     };
+
+
 
 
 }

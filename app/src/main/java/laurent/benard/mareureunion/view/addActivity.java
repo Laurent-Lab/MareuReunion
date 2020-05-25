@@ -22,13 +22,11 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
@@ -82,6 +80,9 @@ public class addActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Selection d'une salle
+     */
     private void addSalleCustom(){
         final ArrayList<String> sallesCustom = new ArrayList<>();
         sallesCustom.add("mario");

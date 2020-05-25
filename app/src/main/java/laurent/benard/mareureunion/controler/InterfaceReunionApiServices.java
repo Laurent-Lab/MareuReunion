@@ -24,6 +24,4 @@ public interface InterfaceReunionApiServices {
      */
     void deleteReunion(Reunion reunion);
 
-
-
 }
