@@ -174,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onStop() {
         super.onStop();
-        onStateNotSaved();
         EventBus.getDefault().unregister(this);
     }
 
