@@ -6,10 +6,8 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
+
         getMenuInflater().inflate(R.menu.main_menu, menu);
         final MenuItem item = menu.findItem(R.id.salle_filter);
         final MenuItem itemDate = menu.findItem(R.id.date_filter);
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                         @Override
                         public boolean onQueryTextChange(String newText) {
                             mReunionsAdapter.getFilter().filter(newText);
+                            mReunionsAdapter.notifyDataSetChanged();
                             return false;
                         }
                     });
@@ -173,10 +173,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     @Override
     public void onStop() {
-        super.onStop();
         EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
+    /**
+     * Suppression des réunions à la rotation de l'écran
+     */
+    @Override
+    public void onDestroy(){
+        DI.getNewInstanceApiService();
+        super.onDestroy();
+    }
 
     /**
      *
@@ -187,6 +195,4 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         services.deleteReunion(event.reunion);
         init();
     }
-
-
 }

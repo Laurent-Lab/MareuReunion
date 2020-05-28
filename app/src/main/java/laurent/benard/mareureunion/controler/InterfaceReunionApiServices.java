@@ -23,5 +23,4 @@ public interface InterfaceReunionApiServices {
      * @param reunion
      */
     void deleteReunion(Reunion reunion);
-
 }

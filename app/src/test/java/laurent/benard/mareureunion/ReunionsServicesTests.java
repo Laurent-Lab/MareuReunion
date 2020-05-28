@@ -1,6 +1,5 @@
 package laurent.benard.mareureunion;
 
-
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +13,6 @@ import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
 import laurent.benard.mareureunion.controler.ReunionsGenerateur;
 import laurent.benard.mareureunion.model.Reunion;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 /**
@@ -39,6 +36,9 @@ public class ReunionsServicesTests {
     @Before
     public void setup(){services = DI.getNewInstanceApiService();}
 
+    /**
+     * Test ajout de la liste de réunions
+     */
     @Test
     public void getReunionWithSucces(){
         List<Reunion> reunions = services.getReunions();
@@ -46,20 +46,19 @@ public class ReunionsServicesTests {
         assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(reunionsExpected.toArray()));
     }
 
+    /**
+     * Test création d'une réunion
+     */
     @Test
     public void createReunionWithSucces(){
         Reunion reunion = new Reunion(color, heure, lieu, sujet, participants, date);
         services.createReunion(reunion);
         assertTrue(services.getReunions().contains(reunion));
-        assertNotNull(reunion);
-        assertThat(reunion.getColor(), equalTo(1));
-        assertThat(reunion.getHeure(), containsString("heure"));
-        assertThat(reunion.getLieu(), containsString("lieu"));
-        assertThat(reunion.getSujet(), containsString("sujet"));
-        assertThat(reunion.getParticipants(), containsString("participant"));
-        assertThat(reunion.getDate(), containsString("date"));
     }
 
+    /**
+     * Test suppression d'une réunion
+     */
     @Test
     public void deleteReunionWithSucces(){
         Reunion reunion = new Reunion(color, heure, lieu, sujet, participants, date);
@@ -68,8 +67,4 @@ public class ReunionsServicesTests {
         services.deleteReunion(reunionToDelete);
         assertFalse(services.getReunions().contains(reunionToDelete));
     }
-
-
-
-
 }

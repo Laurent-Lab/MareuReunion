@@ -17,6 +17,7 @@ public class DI {
      * @return
      */
     public static InterfaceReunionApiServices getNewInstanceApiService() {
-        return new ReunionApiServices();
+        services = new ReunionApiServices();
+        return services;
     }
 }

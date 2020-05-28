@@ -1,21 +1,16 @@
 package laurent.benard.mareureunion.controler;
 
-import android.widget.ImageView;
-
 import java.util.List;
 
 import laurent.benard.mareureunion.model.Reunion;
-import laurent.benard.mareureunion.view.ReunionsAdapter;
 
 public class ReunionApiServices implements InterfaceReunionApiServices {
 
-
     private List<Reunion> reunions = ReunionsGenerateur.generateReunions();
-    private Reunion reunion;
 
     /**
      * Retourne la liste de réunions
-     * @return
+     * @return reunions
      */
     @Override
     public List<Reunion> getReunions() {return reunions;}
@@ -33,5 +28,4 @@ public class ReunionApiServices implements InterfaceReunionApiServices {
      */
     @Override
     public void deleteReunion(Reunion reunion){ reunions.remove(reunion);}
-
 }
