@@ -18,9 +18,5 @@ public abstract class ReunionsGenerateur {
      * Retourne une réunion
      * @return
      */
-    static List<Reunion> generateReunions() {
-
-        return new ArrayList<>(GENERATE_REUNIONS);
-    }
-
+    static List<Reunion> generateReunions() { return new ArrayList<>(GENERATE_REUNIONS); }
 }

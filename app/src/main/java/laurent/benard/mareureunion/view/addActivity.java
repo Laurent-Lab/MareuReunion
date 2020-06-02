@@ -37,7 +37,6 @@ public class addActivity extends AppCompatActivity {
 
     TextInputLayout sujetInput;
     TextInputLayout salleInput;
-    TextInputEditText salleEditText;
     TextInputLayout dateInput;
     TextInputEditText dateEditText;
     TextInputLayout heureInput;
@@ -55,6 +54,18 @@ public class addActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        initActivity();
+        addOntimeSet();
+        addOnDateSet();
+        addSalleCustom();
+        registerReunion();
+
+    }
+
+    /**
+     * Initiation de la vue
+     */
+    public void initActivity(){
         services = DI.getReunionsApiServices();
         sujetInput = findViewById(R.id.txt_input_layout_sujet);
         salleInput = findViewById(R.id.txt_input_layout_lieu);
@@ -65,13 +76,13 @@ public class addActivity extends AppCompatActivity {
         participantsInput = findViewById(R.id.txt_input_layout_participants);
         colorSalleImage = findViewById(R.id.fragment_item_img_circle);
         spinnerCustom = findViewById(R.id.spinner);
-        addOntimeSet();
-        addOnDateSet();
-        addSalleCustom();
-
-
-
         buttonAdd = findViewById(R.id.button_addReunion);
+    }
+
+    /**
+     * Bouton addReunion
+     */
+    public void registerReunion(){
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

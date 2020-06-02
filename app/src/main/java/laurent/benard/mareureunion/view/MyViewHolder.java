@@ -33,7 +33,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         heure = itemView.findViewById(R.id.txt_fragment_horaire);
         lieu = itemView.findViewById(R.id.txt_fragment_lieu);
         participants = itemView.findViewById(R.id.txt_fragment_participants);
-
     }
 
     /**
@@ -46,8 +45,5 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         heure.setText(reunions.getHeure());
         lieu.setText(reunions.getLieu());
         participants.setText(reunions.getParticipants());
-
     }
-
-
 }

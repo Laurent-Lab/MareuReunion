@@ -47,9 +47,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mReunionsAdapter = new ReunionsAdapter(mReunions);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setAdapter(mReunionsAdapter);
-
         btnFloat = findViewById(R.id.floatingActionButton);
+        openActivityAdd();
 
+    }
+
+    /**
+     * Lancement de addActivity
+     */
+    public void openActivityAdd(){
         btnFloat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,17 +63,24 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 v.getContext().startActivity(intent);
             }
         });
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        final MenuItem item = menu.findItem(R.id.salle_filter);
+        final MenuItem itemSalle = menu.findItem(R.id.salle_filter);
         final MenuItem itemDate = menu.findItem(R.id.date_filter);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        final SearchView searchViewDate = (SearchView) MenuItemCompat.getActionView(itemDate);
+        final MenuItem itemReset = menu.findItem(R.id.reset_filter);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(itemSalle);
+
+        itemReset.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                mReunionsAdapter.getFilter().filter("");
+                return false;
+            }
+        });
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         itemDate.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                itemSalle.collapseActionView();
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
@@ -116,23 +130,11 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                             dayText = String.valueOf(dayOfMonth);
                         }
                         String date = dayText + "/" + monthText + "/" + year;
-                        searchViewDate.setQuery(date, true);
+                        mReunionsAdapter.getFilter().filter(date);
                     }
                 }, year, month, day
                 );
                 dilog.show();
-                searchViewDate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        mReunionsAdapter.getFilter().filter(newText);
-                        return false;
-                    }
-                });
                 return false;
             }
         });

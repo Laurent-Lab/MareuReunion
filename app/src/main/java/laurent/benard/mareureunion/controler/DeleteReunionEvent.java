@@ -6,8 +6,5 @@ public class DeleteReunionEvent {
 
     public Reunion reunion;
 
-    public DeleteReunionEvent(Reunion reunion){
-        this.reunion = reunion;
-
-    }
+    public DeleteReunionEvent(Reunion reunion){ this.reunion = reunion;}
 }

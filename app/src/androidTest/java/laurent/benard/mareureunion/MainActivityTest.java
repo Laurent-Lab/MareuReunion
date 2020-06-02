@@ -24,6 +24,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
+import laurent.benard.mareureunion.controler.DI;
+import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
+import laurent.benard.mareureunion.model.Reunion;
 import laurent.benard.mareureunion.view.MainActivity;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
@@ -54,6 +57,50 @@ public class MainActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
+
+    /**
+     * Création d'une réunion pour sujet Laurent
+     */
+    public void initReunionLaurent(){
+        onView(withId(R.id.floatingActionButton)).perform(click());
+
+        onView(withId(R.id.txt_input_sujet)).perform(typeText("laurent"));
+        onView(withId(R.id.spinner)).perform(click());
+        onData(anything()).atPosition(0).perform(click());
+        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("mario"))));
+        onView(withId(R.id.txt_input_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 6, 14));
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+        onView(withId(R.id.txt_input_heure)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+        closeSoftKeyboard();
+        onView(withId(R.id.txt_input_participants)).perform(typeText("aurelie"));
+        closeSoftKeyboard();
+        onView(withId(R.id.button_addReunion)).perform(click());
+    }
+
+    /**
+     * Création d'une réunion pour sujet Aurélie
+     */
+    public void initReunionAurelie(){
+        onView(withId(R.id.floatingActionButton)).perform(click());
+
+        onView(withId(R.id.txt_input_sujet)).perform(typeText("aurelie"));
+        onView(withId(R.id.spinner)).perform(click());
+        onData(anything()).atPosition(1).perform(click());
+        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("luigi"))));
+        onView(withId(R.id.txt_input_date)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 7, 20));
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+        onView(withId(R.id.txt_input_heure)).perform(click());
+        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+        closeSoftKeyboard();
+        onView(withId(R.id.txt_input_participants)).perform(typeText("laurent"));
+        closeSoftKeyboard();
+        onView(withId(R.id.button_addReunion)).perform(click());
+    }
 
     @Before
     public void setUp(){ activity = activityRule.getActivity(); }
@@ -86,23 +133,7 @@ public class MainActivityTest {
      */
     @Test
     public void addReunionTest(){
-        onView(withId(R.id.floatingActionButton)).perform(click());
-        onView(allOf(ViewMatchers.withId(R.id.add_activity), isDisplayed()));
-
-        onView(withId(R.id.txt_input_sujet)).perform(typeText("laurent"));
-        onView(withId(R.id.spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click());
-        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("mario"))));
-        onView(withId(R.id.txt_input_date)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 6, 14));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        onView(withId(R.id.txt_input_heure)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("aurelie"));
-        closeSoftKeyboard();
-        onView(withId(R.id.button_addReunion)).perform(click());
+        initReunionLaurent();
 
         onView(allOf(ViewMatchers.withId(R.id.fragment_list_items), isDisplayed()));
         onView(withId(R.id.txt_fragment_sujet)).check(matches(withText("laurent")));
@@ -122,41 +153,9 @@ public class MainActivityTest {
      */
     @Test
     public void filterReunions(){
-        onView(withId(R.id.floatingActionButton)).perform(click());
-
-        onView(withId(R.id.txt_input_sujet)).perform(typeText("laurent"));
-        onView(withId(R.id.spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click());
-        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("mario"))));
-        onView(withId(R.id.txt_input_date)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 6, 14));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        onView(withId(R.id.txt_input_heure)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("aurelie"));
-        closeSoftKeyboard();
-        onView(withId(R.id.button_addReunion)).perform(click());
-
-        onView(withId(R.id.floatingActionButton)).perform(click());
-
-        onView(withId(R.id.txt_input_sujet)).perform(typeText("aurelie"));
-        onView(withId(R.id.spinner)).perform(click());
-        onData(anything()).atPosition(1).perform(click());
-        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("luigi"))));
-        onView(withId(R.id.txt_input_date)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 7, 20));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        onView(withId(R.id.txt_input_heure)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("laurent"));
-        closeSoftKeyboard();
-        onView(withId(R.id.button_addReunion)).perform(click());
+        initReunionLaurent();
+        initReunionAurelie();
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(2));
-
         onView(withId(R.id.menu_filtre)).perform(click());
         onData(anything()).atPosition(0).perform(click());
         onView(withId(R.id.search_src_text)).perform(typeText("ma"));
@@ -176,24 +175,8 @@ public class MainActivityTest {
      */
     @Test
     public void rotationDeleteItemTest(){
-        onView(withId(R.id.floatingActionButton)).perform(click());
-
-        onView(withId(R.id.txt_input_sujet)).perform(typeText("laurent"));
-        onView(withId(R.id.spinner)).perform(click());
-        onData(anything()).atPosition(0).perform(click());
-        onView(withId(R.id.spinner)).check(matches(withSpinnerText(containsString("mario"))));
-        onView(withId(R.id.txt_input_date)).perform(click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 6, 14));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        onView(withId(R.id.txt_input_heure)).perform(click());
-        onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
-        closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("aurelie"));
-        closeSoftKeyboard();
-        onView(withId(R.id.button_addReunion)).perform(click());
+        initReunionLaurent();
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(1));
-
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(0));
     }

@@ -8,9 +8,7 @@ public class DI {
      * Retourne une instance de l'API service
      * @return
      */
-    public static InterfaceReunionApiServices getReunionsApiServices(){
-        return services;
-    }
+    public static InterfaceReunionApiServices getReunionsApiServices(){ return services; }
 
     /**
      * Pour les tests
