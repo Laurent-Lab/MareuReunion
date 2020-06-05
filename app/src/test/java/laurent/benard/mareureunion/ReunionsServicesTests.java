@@ -84,6 +84,6 @@ public class ReunionsServicesTests {
     @Test
     public void isEmailValidTest() {
         assertFalse(services.isEmailValid("laurent"));
-
+        //
     }
 }
