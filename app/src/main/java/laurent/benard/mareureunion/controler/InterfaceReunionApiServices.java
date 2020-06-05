@@ -23,4 +23,6 @@ public interface InterfaceReunionApiServices {
      * @param reunion
      */
     void deleteReunion(Reunion reunion);
+
+    boolean isEmailValid(CharSequence email);
 }

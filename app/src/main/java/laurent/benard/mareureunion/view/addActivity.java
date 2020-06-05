@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 
 import android.os.Bundle;
 
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,7 +42,7 @@ public class addActivity extends AppCompatActivity {
     TextInputEditText dateEditText;
     TextInputLayout heureInput;
     TextInputEditText heureEditText;
-    TextInputLayout participantsInput;
+    TextInputEditText participantsEditText;
     ImageView colorSalleImage;
     int colorSalle;
     Button buttonAdd;
@@ -73,14 +74,14 @@ public class addActivity extends AppCompatActivity {
         dateEditText = findViewById(R.id.txt_input_date);
         heureInput = findViewById(R.id.txt_input_layout_heure);
         heureEditText = findViewById(R.id.txt_input_heure);
-        participantsInput = findViewById(R.id.txt_input_layout_participants);
+        participantsEditText = findViewById(R.id.txt_input_participants);
         colorSalleImage = findViewById(R.id.fragment_item_img_circle);
         spinnerCustom = findViewById(R.id.spinner);
         buttonAdd = findViewById(R.id.button_addReunion);
     }
 
     /**
-     * Bouton addReunion
+     * bouton addReunion
      */
     public void registerReunion(){
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -200,11 +201,12 @@ public class addActivity extends AppCompatActivity {
         addColor();
         String heure = heureInput.getEditText().getText().toString();
         String sujet = sujetInput.getEditText().getText().toString();
-        String participants = participantsInput.getEditText().getText().toString();
+        participantsEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        String participantsType = participantsEditText.getEditableText().toString();
         String date = dateInput.getEditText().getText().toString();
         int color = colorSalle;
 
-        Reunion reunion = new Reunion(color, heure, lieu, sujet, participants, date);
+        Reunion reunion = new Reunion(color, heure, lieu, sujet, participantsType, date);
         services.createReunion(reunion);
         finish();
     }
@@ -218,20 +220,20 @@ public class addActivity extends AppCompatActivity {
         String heure = heureInput.getEditText().getText().toString();
         String date = dateInput.getEditText().getText().toString();
         String lieu = spinnerCustom.getSelectedItem().toString().trim();
-        String participants = participantsInput.getEditText().getText().toString().trim();
+        String participantsType = participantsEditText.getEditableText().toString();
 
-        if(sujet.isEmpty() || heure.isEmpty() || date.isEmpty() || lieu.isEmpty() || participants.isEmpty()){
+        if(sujet.isEmpty() || heure.isEmpty() || date.isEmpty() || lieu.isEmpty() || participantsType.isEmpty()){
             Toast.makeText(getApplicationContext(), "Tous les champs doivent être remplis", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(sujet.length() > 10) {
-            sujetInput.setError("Ce champ doit contenir moins de 10 caractères");
+        }else if(sujet.length() > 20) {
+            sujetInput.setError("Ce champ doit contenir moins de 20 caractères");
             return false;
-        }else if (participants.length() > 50) {
-            participantsInput.setError("Ce champ doit contenir moins de 50 caractères");
+        }else if (services.isEmailValid(participantsEditText.getText().toString()) == false){
+            participantsEditText.setError("Vous devez rentrer un email valide");
             return false;
         }else {
             sujetInput.setError(null);
-            participantsInput.setError(null);
+            participantsEditText.setError(null);
             return true;
         }
     }

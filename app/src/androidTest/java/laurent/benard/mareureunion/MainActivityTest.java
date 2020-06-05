@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
@@ -35,6 +36,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.actionWithAssertions;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
@@ -75,8 +77,7 @@ public class MainActivityTest {
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
         onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
         closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("aurelie"));
-        closeSoftKeyboard();
+        onView(withId(R.id.txt_input_participants)).perform(scrollTo(), replaceText("laurent@gail.com"), ViewActions.closeSoftKeyboard());
         onView(withId(R.id.button_addReunion)).perform(click());
     }
 
@@ -97,7 +98,7 @@ public class MainActivityTest {
         onView(withClassName(Matchers.equalTo(TimePicker.class.getName()))).perform(PickerActions.setTime(9, 30));
         onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
         closeSoftKeyboard();
-        onView(withId(R.id.txt_input_participants)).perform(typeText("laurent"));
+        onView(withId(R.id.txt_input_participants)).perform(replaceText("aurelie@gmail.com"));
         closeSoftKeyboard();
         onView(withId(R.id.button_addReunion)).perform(click());
     }
@@ -139,10 +140,9 @@ public class MainActivityTest {
         onView(withId(R.id.txt_fragment_sujet)).check(matches(withText("laurent")));
         onView(withId(R.id.txt_fragment_horaire)).check(matches(withText("09:30")));
         onView(withId(R.id.txt_fragment_lieu)).check(matches(withText("mario")));
-        onView(withId(R.id.txt_fragment_participants)).check(matches(withText("aurelie")));
+        onView(withId(R.id.txt_fragment_participants)).check(matches(withText("laurent@gail.com")));
         onView(withId(R.id.fragment_item_img_circle)).equals(R.drawable.ic_fiber_manual_record_red_24dp);
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(1));
-
         onView(withId(R.id.but_fragment_delete)).perform(click());
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(0));
     }
@@ -180,4 +180,5 @@ public class MainActivityTest {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(0));
     }
+
 }

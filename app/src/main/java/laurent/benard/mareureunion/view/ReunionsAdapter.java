@@ -95,7 +95,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
                 filteredList.addAll(reunionsAll);
             } else {
                 for (Reunion reunion : reunionsAll){
-                    if (reunion.getLieu().contains(charSequence.toString())){
+                    if (reunion.getLieu().contains(charSequence.toString().toLowerCase())){
                         filteredList.add(reunion);
                     }
                     else if (reunion.getDate().contains(charSequence.toString())){
