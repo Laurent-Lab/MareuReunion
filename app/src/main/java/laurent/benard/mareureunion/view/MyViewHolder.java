@@ -7,18 +7,17 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import laurent.benard.mareureunion.R;
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.model.Meeting;
 
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView color;
     public ImageButton deleteButton;
-    private TextView sujet;
-    private TextView heure;
-    private TextView lieu;
+    private TextView topic;
+    private TextView hour;
+    private TextView location;
     private TextView participants;
-    Reunion reunion;
 
     /**
      *
@@ -29,9 +28,9 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
         color = itemView.findViewById(R.id.fragment_item_img_circle);
         deleteButton = itemView.findViewById(R.id.but_fragment_delete);
-        sujet = itemView.findViewById(R.id.txt_fragment_sujet);
-        heure = itemView.findViewById(R.id.txt_fragment_horaire);
-        lieu = itemView.findViewById(R.id.txt_fragment_lieu);
+        topic = itemView.findViewById(R.id.txt_fragment_sujet);
+        hour = itemView.findViewById(R.id.txt_fragment_horaire);
+        location = itemView.findViewById(R.id.txt_fragment_lieu);
         participants = itemView.findViewById(R.id.txt_fragment_participants);
     }
 
@@ -39,11 +38,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
      * Vue d'une réunion
      * @param reunions
      */
-    void display(Reunion reunions){
+    void display(Meeting reunions){
         color.setImageResource(reunions.getColor());
-        sujet.setText(reunions.getSujet());
-        heure.setText(reunions.getHeure());
-        lieu.setText(reunions.getLieu());
+        topic.setText(reunions.getTopic());
+        hour.setText(reunions.getHour());
+        location.setText(reunions.getLocation());
         participants.setText(reunions.getParticipants());
     }
 }

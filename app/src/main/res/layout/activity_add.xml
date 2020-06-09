@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Sujet de la reunion"
+                    android:hint="Sujet de la meeting"
                     android:inputType="text"
                     android:maxEms="20"
                     app:errorEnabled="true" />
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Valider une reunion" />
+                    android:text="Valider une meeting" />
 
             </LinearLayout>
 

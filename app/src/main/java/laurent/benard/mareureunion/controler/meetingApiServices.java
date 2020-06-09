@@ -1,41 +1,39 @@
 package laurent.benard.mareureunion.controler;
 
-import android.util.Patterns;
-
 import java.util.List;
 import java.util.regex.Pattern;
 
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.model.Meeting;
 
-public class ReunionApiServices implements InterfaceReunionApiServices {
+public class meetingApiServices implements InterfaceMeetingApiServices {
 
-    private List<Reunion> reunions = ReunionsGenerateur.generateReunions();
+    private List<Meeting> meetings = MeetingsGenerator.generateMeetings();
 
     /**
      * Retourne la liste de réunions
      * @return reunions
      */
     @Override
-    public List<Reunion> getReunions() {return reunions;}
+    public List<Meeting> getMeetings() {return meetings;}
 
     /**
      * Création d'une réunion
-     * @param reunion
+     * @param meeting
      */
     @Override
-    public void createReunion(Reunion reunion){ reunions.add(reunion); }
+    public void createMeeting(Meeting meeting){ meetings.add(meeting); }
 
     /**
      * Supprime une réunion
-     * @param reunion
+     * @param meeting
      */
     @Override
-    public void deleteReunion(Reunion reunion){ reunions.remove(reunion);}
+    public void deleteMeeting(Meeting meeting){ meetings.remove(meeting);}
 
     @Override
     public boolean isEmailValid(CharSequence email){
         boolean emailFlag = false;
-        String emailArr[] = email.toString().split("[,]");
+        String emailArr[] = email.toString().split("[,| ]");
         for(int i = 0; i < emailArr.length; i++){
             emailFlag = Pattern.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +

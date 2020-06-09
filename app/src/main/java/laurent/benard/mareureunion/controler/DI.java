@@ -2,20 +2,20 @@ package laurent.benard.mareureunion.controler;
 
 public class DI {
 
-    private static InterfaceReunionApiServices services = new ReunionApiServices();
+    private static InterfaceMeetingApiServices services = new meetingApiServices();
 
     /**
      * Retourne une instance de l'API service
      * @return
      */
-    public static InterfaceReunionApiServices getReunionsApiServices(){ return services; }
+    public static InterfaceMeetingApiServices getMeetingsApiServices(){ return services; }
 
     /**
      * Pour les tests
      * @return
      */
-    public static InterfaceReunionApiServices getNewInstanceApiService() {
-        services = new ReunionApiServices();
+    public static InterfaceMeetingApiServices getNewInstanceApiService() {
+        services = new meetingApiServices();
         return services;
     }
 }

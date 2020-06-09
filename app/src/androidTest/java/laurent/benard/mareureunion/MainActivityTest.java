@@ -1,15 +1,10 @@
 package laurent.benard.mareureunion;
 
 
-import android.app.TimePickerDialog;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -17,7 +12,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,25 +19,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
-import laurent.benard.mareureunion.controler.DI;
-import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
-import laurent.benard.mareureunion.model.Reunion;
 import laurent.benard.mareureunion.view.MainActivity;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.actionWithAssertions;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;

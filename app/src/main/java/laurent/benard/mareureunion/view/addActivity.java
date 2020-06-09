@@ -31,25 +31,25 @@ import java.util.Locale;
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
-import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.controler.InterfaceMeetingApiServices;
+import laurent.benard.mareureunion.model.Meeting;
 
 public class addActivity extends AppCompatActivity {
 
-    TextInputLayout sujetInput;
-    TextInputLayout salleInput;
+    TextInputLayout topicInput;
+    TextInputLayout roomInput;
     TextInputLayout dateInput;
     TextInputEditText dateEditText;
-    TextInputLayout heureInput;
-    TextInputEditText heureEditText;
+    TextInputLayout hourInput;
+    TextInputEditText hourEditText;
     TextInputEditText participantsEditText;
-    ImageView colorSalleImage;
-    int colorSalle;
+    ImageView colorRoomPicture;
+    int colorRoom;
     Button buttonAdd;
     Spinner spinnerCustom;
     final Calendar calendar = Calendar.getInstance();
     final Calendar calendarDate = Calendar.getInstance();
-    private InterfaceReunionApiServices services;
+    private InterfaceMeetingApiServices services;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +67,15 @@ public class addActivity extends AppCompatActivity {
      * Initiation de la vue
      */
     public void initActivity(){
-        services = DI.getReunionsApiServices();
-        sujetInput = findViewById(R.id.txt_input_layout_sujet);
-        salleInput = findViewById(R.id.txt_input_layout_lieu);
+        services = DI.getMeetingsApiServices();
+        topicInput = findViewById(R.id.txt_input_layout_sujet);
+        roomInput = findViewById(R.id.txt_input_layout_lieu);
         dateInput = findViewById(R.id.txt_input_layout_date);
         dateEditText = findViewById(R.id.txt_input_date);
-        heureInput = findViewById(R.id.txt_input_layout_heure);
-        heureEditText = findViewById(R.id.txt_input_heure);
+        hourInput = findViewById(R.id.txt_input_layout_heure);
+        hourEditText = findViewById(R.id.txt_input_heure);
         participantsEditText = findViewById(R.id.txt_input_participants);
-        colorSalleImage = findViewById(R.id.fragment_item_img_circle);
+        colorRoomPicture = findViewById(R.id.fragment_item_img_circle);
         spinnerCustom = findViewById(R.id.spinner);
         buttonAdd = findViewById(R.id.button_addReunion);
     }
@@ -96,12 +96,12 @@ public class addActivity extends AppCompatActivity {
      * Selection d'une salle
      */
     private void addSalleCustom(){
-        final ArrayList<String> sallesCustom = new ArrayList<>();
-        sallesCustom.add("mario");
-        sallesCustom.add("luigi");
-        sallesCustom.add("vaultboy");
+        final ArrayList<String> roomsCustom = new ArrayList<>();
+        roomsCustom.add("mario");
+        roomsCustom.add("luigi");
+        roomsCustom.add("vaultboy");
         spinnerCustom.setAdapter(new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, sallesCustom));
+                android.R.layout.simple_list_item_1, roomsCustom));
 
         spinnerCustom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -121,21 +121,21 @@ public class addActivity extends AppCompatActivity {
      * TimePicker
      */
     private void addOntimeSet(){
-        final TimePickerDialog.OnTimeSetListener heureTimer = new TimePickerDialog.OnTimeSetListener() {
+        final TimePickerDialog.OnTimeSetListener hourTimer = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendarDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendarDate.set(Calendar.MINUTE, minute);
                 String myFormat = "HH:mm";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
-                heureEditText.setText(sdf.format(calendarDate.getTime()));
+                hourEditText.setText(sdf.format(calendarDate.getTime()));
             }
         };
 
-        heureEditText.setOnClickListener(new View.OnClickListener() {
+        hourEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(addActivity.this, heureTimer, calendarDate.get(Calendar.HOUR_OF_DAY),
+                new TimePickerDialog(addActivity.this, hourTimer, calendarDate.get(Calendar.HOUR_OF_DAY),
                         calendarDate.get(Calendar.MINUTE), false).show();
             }
         });
@@ -183,12 +183,12 @@ public class addActivity extends AppCompatActivity {
 
         String mColor = spinnerCustom.getSelectedItem().toString();
         if (mColor.contains("mario")){
-            colorSalle = (R.drawable.ic_fiber_manual_record_red_24dp);
+            colorRoom = (R.drawable.ic_fiber_manual_record_red_24dp);
         }
         else if(mColor.contains("luigi")){
-            colorSalle = (R.drawable.ic_fiber_manual_record_green_24dp);
+            colorRoom = (R.drawable.ic_fiber_manual_record_green_24dp);
         }else {
-            colorSalle = (R.drawable.ic_fiber_manual_record_yellow_24dp);
+            colorRoom = (R.drawable.ic_fiber_manual_record_yellow_24dp);
         }
    }
 
@@ -199,15 +199,15 @@ public class addActivity extends AppCompatActivity {
 
         String lieu = spinnerCustom.getSelectedItem().toString();
         addColor();
-        String heure = heureInput.getEditText().getText().toString();
-        String sujet = sujetInput.getEditText().getText().toString();
+        String heure = hourInput.getEditText().getText().toString();
+        String sujet = topicInput.getEditText().getText().toString();
         participantsEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         String participantsType = participantsEditText.getEditableText().toString();
         String date = dateInput.getEditText().getText().toString();
-        int color = colorSalle;
+        int color = colorRoom;
 
-        Reunion reunion = new Reunion(color, heure, lieu, sujet, participantsType, date);
-        services.createReunion(reunion);
+        Meeting meeting = new Meeting(color, heure, lieu, sujet, participantsType, date);
+        services.createMeeting(meeting);
         finish();
     }
 
@@ -216,23 +216,23 @@ public class addActivity extends AppCompatActivity {
      * @return
      */
     private boolean validateReunion(){
-        String sujet = sujetInput.getEditText().getText().toString().trim();
-        String heure = heureInput.getEditText().getText().toString();
+        String topic = topicInput.getEditText().getText().toString().trim();
+        String hour = hourInput.getEditText().getText().toString();
         String date = dateInput.getEditText().getText().toString();
-        String lieu = spinnerCustom.getSelectedItem().toString().trim();
+        String location = spinnerCustom.getSelectedItem().toString().trim();
         String participantsType = participantsEditText.getEditableText().toString();
 
-        if(sujet.isEmpty() || heure.isEmpty() || date.isEmpty() || lieu.isEmpty() || participantsType.isEmpty()){
+        if(topic.isEmpty() || hour.isEmpty() || date.isEmpty() || location.isEmpty() || participantsType.isEmpty()){
             Toast.makeText(getApplicationContext(), "Tous les champs doivent être remplis", Toast.LENGTH_SHORT).show();
             return false;
-        }else if(sujet.length() > 20) {
-            sujetInput.setError("Ce champ doit contenir moins de 20 caractères");
+        }else if(topic.length() > 20) {
+            topicInput.setError("Ce champ doit contenir moins de 20 caractères");
             return false;
         }else if (services.isEmailValid(participantsEditText.getText().toString()) == false){
             participantsEditText.setError("Vous devez rentrer un email valide");
             return false;
         }else {
-            sujetInput.setError(null);
+            topicInput.setError(null);
             participantsEditText.setError(null);
             return true;
         }

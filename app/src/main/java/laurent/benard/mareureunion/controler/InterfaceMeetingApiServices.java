@@ -2,27 +2,27 @@ package laurent.benard.mareureunion.controler;
 
 import java.util.List;
 
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.model.Meeting;
 
-public interface InterfaceReunionApiServices {
+public interface InterfaceMeetingApiServices {
 
     /**
      * Je récupère la liste de réunions
      * @return reunions
      */
-    List<Reunion> getReunions();
+    List<Meeting> getMeetings();
 
     /**
      * Retourne une réunion
-     * @param reunion
+     * @param meeting
      */
-    void createReunion(Reunion reunion);
+    void createMeeting(Meeting meeting);
 
     /**
      * Supprime une réunion
-     * @param reunion
+     * @param meeting
      */
-    void deleteReunion(Reunion reunion);
+    void deleteMeeting(Meeting meeting);
 
     boolean isEmailValid(CharSequence email);
 }

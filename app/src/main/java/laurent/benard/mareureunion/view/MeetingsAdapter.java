@@ -16,24 +16,24 @@ import java.util.List;
 
 import laurent.benard.mareureunion.R;
 import laurent.benard.mareureunion.controler.DI;
-import laurent.benard.mareureunion.controler.DeleteReunionEvent;
-import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.controler.DeleteMeetingEvent;
+import laurent.benard.mareureunion.controler.InterfaceMeetingApiServices;
+import laurent.benard.mareureunion.model.Meeting;
 
-public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implements Filterable {
+public class MeetingsAdapter extends RecyclerView.Adapter<MyViewHolder> implements Filterable {
 
-    List<Reunion> reunions;
-    List<Reunion> reunionsAll;
-    private InterfaceReunionApiServices services;
+    List<Meeting> meetings;
+    List<Meeting> reunionsAll;
+    private InterfaceMeetingApiServices services;
 
     /**
      *
-     * @param reunions
+     * @param meetings
      */
-    public ReunionsAdapter(List<Reunion> reunions){
-        this.reunions = reunions;
-        this.reunionsAll = new ArrayList<>(reunions);
-        services = DI.getReunionsApiServices();
+    public MeetingsAdapter(List<Meeting> meetings){
+        this.meetings = meetings;
+        this.reunionsAll = new ArrayList<>(meetings);
+        services = DI.getMeetingsApiServices();
     }
 
     /**
@@ -46,7 +46,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.reunion_item, parent, false);
-        services = DI.getReunionsApiServices();
+        services = DI.getMeetingsApiServices();
         return new MyViewHolder(view);
     }
 
@@ -57,12 +57,12 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
      */
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position){
-        final Reunion reunion = reunions.get(position);
-        holder.display(reunions.get(position));
+        final Meeting meeting = meetings.get(position);
+        holder.display(meetings.get(position));
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new DeleteReunionEvent(reunion));
+                EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
             }
         });
     }
@@ -72,7 +72,7 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
      * @return
      */
     @Override
-    public int getItemCount() { return reunions.size();}
+    public int getItemCount() { return meetings.size();}
 
     /**
      * Méthodes pour filtrer les réunions
@@ -88,18 +88,18 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
         //Background
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            reunionsAll = services.getReunions();
-            List<Reunion> filteredList = new ArrayList<>();
+            reunionsAll = services.getMeetings();
+            List<Meeting> filteredList = new ArrayList<>();
 
             if (charSequence.toString().isEmpty()){
                 filteredList.addAll(reunionsAll);
             } else {
-                for (Reunion reunion : reunionsAll){
-                    if (reunion.getLieu().contains(charSequence.toString().toLowerCase())){
-                        filteredList.add(reunion);
+                for (Meeting meeting : reunionsAll){
+                    if (meeting.getLocation().contains(charSequence.toString().toLowerCase())){
+                        filteredList.add(meeting);
                     }
-                    else if (reunion.getDate().contains(charSequence.toString())){
-                        filteredList.add(reunion);
+                    else if (meeting.getDated().contains(charSequence.toString())){
+                        filteredList.add(meeting);
                     }
                 }
             }
@@ -112,8 +112,8 @@ public class ReunionsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            reunions.clear();
-            reunions.addAll((Collection<? extends Reunion>) filterResults.values);
+            meetings.clear();
+            meetings.addAll((Collection<? extends Meeting>) filterResults.values);
             notifyDataSetChanged();
         }
     };

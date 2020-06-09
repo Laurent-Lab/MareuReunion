@@ -1,28 +1,18 @@
 package laurent.benard.mareureunion;
 
-import android.text.InputType;
-import android.util.Patterns;
-import android.widget.EditText;
-
-import androidx.annotation.NonNull;
-
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import laurent.benard.mareureunion.controler.DI;
-import laurent.benard.mareureunion.controler.InterfaceReunionApiServices;
-import laurent.benard.mareureunion.controler.ReunionsGenerateur;
-import laurent.benard.mareureunion.model.Reunion;
+import laurent.benard.mareureunion.controler.InterfaceMeetingApiServices;
+import laurent.benard.mareureunion.controler.MeetingsGenerator;
+import laurent.benard.mareureunion.model.Meeting;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
@@ -36,7 +26,7 @@ import static org.junit.Assert.*;
 @RunWith(JUnit4.class)
 public class ReunionsServicesTests {
 
-    private InterfaceReunionApiServices services;
+    private InterfaceMeetingApiServices services;
 
     private int color = 1;
     private String heure = "heure";
@@ -54,9 +44,9 @@ public class ReunionsServicesTests {
      */
     @Test
     public void getReunionWithSucces(){
-        List<Reunion> reunions = services.getReunions();
-        List<Reunion> reunionsExpected = ReunionsGenerateur.GENERATE_REUNIONS;
-        assertThat(reunions, IsIterableContainingInAnyOrder.containsInAnyOrder(reunionsExpected.toArray()));
+        List<Meeting> meetings = services.getMeetings();
+        List<Meeting> reunionsExpected = MeetingsGenerator.generateMeetings;
+        assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(reunionsExpected.toArray()));
     }
 
     /**
@@ -64,9 +54,9 @@ public class ReunionsServicesTests {
      */
     @Test
     public void createReunionWithSucces(){
-        Reunion reunion = new Reunion(color, heure, lieu, sujet, participants, date);
-        services.createReunion(reunion);
-        assertTrue(services.getReunions().contains(reunion));
+        Meeting meeting = new Meeting(color, heure, lieu, sujet, participants, date);
+        services.createMeeting(meeting);
+        assertTrue(services.getMeetings().contains(meeting));
     }
 
     /**
@@ -74,11 +64,11 @@ public class ReunionsServicesTests {
      */
     @Test
     public void deleteReunionWithSucces(){
-        Reunion reunion = new Reunion(color, heure, lieu, sujet, participants, date);
-        services.createReunion(reunion);
-        Reunion reunionToDelete = services.getReunions().get(0);
-        services.deleteReunion(reunionToDelete);
-        assertFalse(services.getReunions().contains(reunionToDelete));
+        Meeting meeting = new Meeting(color, heure, lieu, sujet, participants, date);
+        services.createMeeting(meeting);
+        Meeting meetingToDelete = services.getMeetings().get(0);
+        services.deleteMeeting(meetingToDelete);
+        assertFalse(services.getMeetings().contains(meetingToDelete));
     }
 
     /**
