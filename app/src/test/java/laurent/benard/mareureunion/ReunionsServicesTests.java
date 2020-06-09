@@ -81,9 +81,12 @@ public class ReunionsServicesTests {
         assertFalse(services.getReunions().contains(reunionToDelete));
     }
 
+    /**
+     * Test vérification d'un mail
+     */
     @Test
     public void isEmailValidTest() {
         assertFalse(services.isEmailValid("laurent"));
-        //
+        assertTrue(services.isEmailValid("laurent@gmail.com"));
     }
 }

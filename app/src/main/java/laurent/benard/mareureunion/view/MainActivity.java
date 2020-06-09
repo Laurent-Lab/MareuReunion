@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         mRecyclerView.setAdapter(mReunionsAdapter);
         btnFloat = findViewById(R.id.floatingActionButton);
         openActivityAdd();
-
     }
 
     /**

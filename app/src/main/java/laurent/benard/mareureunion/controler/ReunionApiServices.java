@@ -3,6 +3,7 @@ package laurent.benard.mareureunion.controler;
 import android.util.Patterns;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import laurent.benard.mareureunion.model.Reunion;
 
@@ -36,7 +37,14 @@ public class ReunionApiServices implements InterfaceReunionApiServices {
         boolean emailFlag = false;
         String emailArr[] = email.toString().split("[,]");
         for(int i = 0; i < emailArr.length; i++){
-            emailFlag = Patterns.EMAIL_ADDRESS.matcher(emailArr[i].trim()).matches();
+            emailFlag = Pattern.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+").matcher(emailArr[i].trim()
+            ).matches();
         }
         return emailFlag;
     }

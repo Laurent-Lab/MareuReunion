@@ -161,7 +161,6 @@ public class MainActivityTest {
         onView(withId(R.id.search_src_text)).perform(typeText("ma"));
         onView(withId(R.id.fragment_list_items)).check(new RecyclerViewItemCountAssertion(1));
         onView(withId(R.id.txt_fragment_lieu)).check(matches(withText("mario")));
-
         onView(withId(R.id.menu_filtre)).perform(click());
         onData(anything()).atPosition(1).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 7, 20));
