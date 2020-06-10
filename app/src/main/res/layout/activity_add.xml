@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:hint="Sujet de la meeting"
+                    android:hint="Sujet de la réunion"
                     android:inputType="text"
                     android:maxEms="20"
                     app:errorEnabled="true" />

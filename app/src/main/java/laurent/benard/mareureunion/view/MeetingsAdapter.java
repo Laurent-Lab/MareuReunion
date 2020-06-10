@@ -23,7 +23,7 @@ import laurent.benard.mareureunion.model.Meeting;
 public class MeetingsAdapter extends RecyclerView.Adapter<MyViewHolder> implements Filterable {
 
     List<Meeting> meetings;
-    List<Meeting> reunionsAll;
+    List<Meeting> meetingsAll;
     private InterfaceMeetingApiServices services;
 
     /**
@@ -32,7 +32,7 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
      */
     public MeetingsAdapter(List<Meeting> meetings){
         this.meetings = meetings;
-        this.reunionsAll = new ArrayList<>(meetings);
+        this.meetingsAll = new ArrayList<>(meetings);
         services = DI.getMeetingsApiServices();
     }
 
@@ -88,13 +88,13 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
         //Background
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            reunionsAll = services.getMeetings();
+            meetingsAll = services.getMeetings();
             List<Meeting> filteredList = new ArrayList<>();
 
             if (charSequence.toString().isEmpty()){
-                filteredList.addAll(reunionsAll);
+                filteredList.addAll(meetingsAll);
             } else {
-                for (Meeting meeting : reunionsAll){
+                for (Meeting meeting : meetingsAll){
                     if (meeting.getLocation().contains(charSequence.toString().toLowerCase())){
                         filteredList.add(meeting);
                     }

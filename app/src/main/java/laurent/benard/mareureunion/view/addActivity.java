@@ -58,8 +58,8 @@ public class addActivity extends AppCompatActivity {
         initActivity();
         addOntimeSet();
         addOnDateSet();
-        addSalleCustom();
-        registerReunion();
+        addRoomCustom();
+        registerMeeting();
 
     }
 
@@ -83,11 +83,11 @@ public class addActivity extends AppCompatActivity {
     /**
      * bouton addReunion
      */
-    public void registerReunion(){
+    public void registerMeeting(){
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveReunion();
+                saveMeeting();
             }
         });
     }
@@ -95,7 +95,7 @@ public class addActivity extends AppCompatActivity {
     /**
      * Selection d'une salle
      */
-    private void addSalleCustom(){
+    private void addRoomCustom(){
         final ArrayList<String> roomsCustom = new ArrayList<>();
         roomsCustom.add("mario");
         roomsCustom.add("luigi");
@@ -195,7 +195,7 @@ public class addActivity extends AppCompatActivity {
     /**
      * Création d'une réunion
      */
-    public void addReunion() {
+    public void addMeeting() {
 
         String lieu = spinnerCustom.getSelectedItem().toString();
         addColor();
@@ -215,7 +215,7 @@ public class addActivity extends AppCompatActivity {
      * Valider une réunion
      * @return
      */
-    private boolean validateReunion(){
+    private boolean validateMeeting(){
         String topic = topicInput.getEditText().getText().toString().trim();
         String hour = hourInput.getEditText().getText().toString();
         String date = dateInput.getEditText().getText().toString();
@@ -241,11 +241,11 @@ public class addActivity extends AppCompatActivity {
     /**
      * Enregistrer une réunion
      */
-    private void saveReunion(){
-        if (!validateReunion()){
+    private void saveMeeting(){
+        if (!validateMeeting()){
             return;
         }else{
-            addReunion();
+            addMeeting();
         }
     }
 }
