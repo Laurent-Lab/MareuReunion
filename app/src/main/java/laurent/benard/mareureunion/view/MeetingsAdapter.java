@@ -27,7 +27,6 @@ public class MeetingsAdapter extends RecyclerView.Adapter<MyViewHolder> implemen
     private InterfaceMeetingApiServices services;
 
     /**
-     *
      * @param meetings
      */
     public MeetingsAdapter(List<Meeting> meetings){
